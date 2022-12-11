@@ -1,0 +1,48 @@
+running.txt
+1. Implementations of system call.
+    a.CreateFile()
+    b.ReadFile()
+    c.WriteFile()
+    d.CloseHandle()
+Que-01.c
+
+2.Implementation of following scripting program
+    a.QuickSort
+    b.Palindrome
+    c.String Reverse 
+    d.PrimeNo
+Que-02.a.sh
+Que-02.b.sh
+Que-02.c.sh
+Que-02.d.sh
+
+3.Implement multithreading for matrix operations using Threads
+Que-03.c
+
+4.Implement of Dining Philosopher problem using semaphor.
+Que-04.c
+
+5.Implement producer consumer problem for synchronisation.
+Que-05.c
+
+6.Write a program to compute Finish time,turnaround time,waiting time.
+    a.FCFS(non premptive)
+    b.SRTF(premptive)
+    c.priority Scheduling algorithm(premptive)(lower no ,higher priority).
+Que-06.a.cpp
+Que-06.b.cpp
+Que-06.c.cpp
+
+7.Write a program to compute the Finish time,turnaround time,waiting time.
+    a.Round Robin
+    b.priority Scheduling algorithm(premptive)(higher no ,higher priority).
+Que-07.a.cpp
+Que-07.b.cpp
+
+8.Implementation of bankers algorithm(must find safe sequence).
+Que-08.c
+
+9.Implement of multithreading program for 3 moving balls(1st - high speed, 
+    2ed-medium speed, 3rd-slow speed,unless and until first ball reaches to end 2ed )wont start moving
+    and once 2ed has completed 3rd will move)
+BouncingBalls.java

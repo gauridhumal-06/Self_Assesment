@@ -1,0 +1,8 @@
+
+Job ID : 1
+Time Limit Exceeded
+IC : 1
+IR : GD10
+TTC : 2
+LLC : 0
+

@@ -1,0 +1,12 @@
+Threading program/semaphor.(Dining,matrix)
+ gcc filename.c -o thread -lpthread
+ ./thread
+
+shell scripting program
+sudo bash ./filename.sh
+
+*****************for java installation**********
+
+sudo apt-get update.
+sudo apt install default-jdk.
+java -version.
