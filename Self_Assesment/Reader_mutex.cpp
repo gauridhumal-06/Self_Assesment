@@ -1,58 +1,64 @@
-#include<stdio.h>
-#include<bits\stdc++.h>
-#include<string.h>
-int hours=23,mins=59,secs=53;
-void update();
-void display();
-pthread_mutex_t timer_lock;
-int main(void)
+#include <pthread.h>
+#include <semaphore.h>
+#include <stdio.h>
+
+sem_t wrt;
+pthread_mutex_t mutex;
+int cnt = 1;
+int numreader = 0;
+
+void *writer(void *wno)
 {
-    void *status;
-    pthread_t r_thr,w_thr;
-    pthread_mutex_init(&timer_lock,0);
-    pthread_create(&r_thr,NULL,(void *)&display,(void *)NULL);
-    pthread_create(&w_thr,NULL,(void *)&update,(void *)NULL);
-    pthread_join(r_thr,&status);
-    pthread_join(w_thr,&status);
+    sem_wait(&wrt);
+    cnt = cnt*2;
+    printf("Writer %d modified count to %d\n",(*((int *)wno)),cnt);
+    sem_post(&wrt);
+
+}
+void *reader(void *rno)
+{
+    pthread_mutex_lock(&mutex);
+    numreader++;
+    if(numreader == 1) {
+        sem_wait(&wrt); 
+    }
+    pthread_mutex_unlock(&mutex);
+    printf("Reader %d: read count as %d\n",*((int *)rno),cnt);
+    pthread_mutex_lock(&mutex);
+    numreader--;
+    if(numreader == 0) {
+        sem_post(&wrt); 
+    }
+    pthread_mutex_unlock(&mutex);
 }
 
-void update()
+int main()
 {
-  void *status;
-  while(1)
-  {
-        pthread_mutex_lock(&timer_lock);
-        secs=secs+1;
-        if(secs==60)
-        {
-                mins=mins+1;
-                secs=0;
-        }
-        if(mins==60)
-        {
-                hours=hours+1;
-                mins=0;
-        }
-        if(hours==24)
-        {
-                hours=0;
-        }
-  pthread_mutex_unlock(&timer_lock);
-  sleep(1);
- }
- pthread_exit(&status);
+
+    pthread_t read[10],write[5];
+    pthread_mutex_init(&mutex, NULL);
+    sem_init(&wrt,0,1);
+
+    int a[10] = {1,2,3,4,5,6,7,8,9,10};
+
+    for(int i = 0; i < 10; i++) {
+        pthread_create(&read[i], NULL, (void *)reader, (void *)&a[i]);
+    }
+    for(int i = 0; i < 5; i++) {
+        pthread_create(&write[i], NULL, (void *)writer, (void *)&a[i]);
+    }
+
+    for(int i = 0; i < 10; i++) {
+        pthread_join(read[i], NULL);
+    }
+    for(int i = 0; i < 5; i++) {
+        pthread_join(write[i], NULL);
+    }
+
+    pthread_mutex_destroy(&mutex);
+    sem_destroy(&wrt);
+
+    return 0;
+
 }
 
-void display()
-{
-  void *status;
-  while(1)
-  {
-        pthread_mutex_lock(&timer_lock);
-        printf("\n DISPLAY:");
-        printf("\t %d %d %d",hours,mins,secs);
-        pthread_mutex_unlock(&timer_lock);
-       // sleep(1);
-  }
- pthread_exit(&status);
-}
