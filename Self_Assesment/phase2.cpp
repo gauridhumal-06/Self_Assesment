@@ -6,8 +6,8 @@
 #include <vector>
 using namespace std;
 
-ifstream fin("input.txt");
-ofstream fout("output.txt");
+ifstream fin("input1.txt");
+ofstream fout("output1.txt");
 
 char M[300][4], buffer[40], IR[4], R[4];
 int IC, C, SI, PI, TI, PTR, TTC, LLC;
