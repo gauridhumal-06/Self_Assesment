@@ -1,3 +1,4 @@
+//less  burst time  gets execute , premtive
 #include <bits/stdc++.h>
 using namespace std;
 //structure for every process
