@@ -62,7 +62,7 @@ void findavgTime(Process proc[], int n) {
    // Function to find turn around time for
    // all processes
    findTurnAroundTime(proc, n, wt, tat);
-   cout << "Processes " << " Burst time " << " Waiting time " << " Turn around time";
+   cout << "Processes " << " Burst time " << " Waiting time " << " Turn around time"<<"\n";
    for (int i = 0; i < n; i++) {
       total_wt = total_wt + wt[i];
       total_tat = total_tat + tat[i];
