@@ -1,3 +1,4 @@
+//Least recently used backside <-------door kon hai voh
 #include <stdio.h>
 
 int findLRU(int time[], int n)
