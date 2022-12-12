@@ -1,3 +1,4 @@
+//Criteria - Checks Burst time at every step, Non- p
 #include<iostream>
 using namespace std;
 void swap(int *a, int *b) {
