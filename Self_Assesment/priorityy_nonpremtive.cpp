@@ -1,91 +1,73 @@
-#include<bits/stdc++.h>
+#include<iostream>
+ 
 using namespace std;
  
-struct Process
-{
-    int pid;  // Process ID
-    int bt;   // CPU Burst time required
-    int priority; // Priority of this process
-};
- 
-// Function to sort the Process acc. to priority
-bool comparison(Process a, Process b)
-{
-    return (a.priority > b.priority);
-}
- 
-// Function to find the waiting time for all
-// processes
-void findWaitingTime(Process proc[], int n,
-                     int wt[])
-{
-    // waiting time for first process is 0
-    wt[0] = 0;
- 
-    // calculating waiting time
-    for (int  i = 1; i < n ; i++ )
-        wt[i] =  proc[i-1].bt + wt[i-1] ;
-}
- 
-// Function to calculate turn around time
-void findTurnAroundTime( Process proc[], int n,
-                         int wt[], int tat[])
-{
-    // calculating turnaround time by adding
-    // bt[i] + wt[i]
-    for (int  i = 0; i < n ; i++)
-        tat[i] = proc[i].bt + wt[i];
-}
- 
-//Function to calculate average time
-void findavgTime(Process proc[], int n)
-{
-    int wt[n], tat[n], total_wt = 0, total_tat = 0;
- 
-    //Function to find waiting time of all processes
-    findWaitingTime(proc, n, wt);
- 
-    //Function to find turn around time for all processes
-    findTurnAroundTime(proc, n, wt, tat);
- 
-    //Display processes along with all details
-    cout << "\nProcesses  "<< " Burst time  "
-         << " Waiting time  " << " Turn around time\n";
- 
-    // Calculate total waiting time and total turn
-    // around time
-    for (int  i=0; i<n; i++)
-    {
-        total_wt = total_wt + wt[i];
-        total_tat = total_tat + tat[i];
-        cout << "   " << proc[i].pid << "\t\t"
-             << proc[i].bt << "\t    " << wt[i]
-             << "\t\t  " << tat[i] <<endl;
-    }
- 
-    cout << "\nAverage waiting time = "
-         << (float)total_wt / (float)n;
-    cout << "\nAverage turn around time = "
-         << (float)total_tat / (float)n;
-}
- 
-void priorityScheduling(Process proc[], int n)
-{
-    // Sort processes by priority
-    sort(proc, proc + n, comparison);
- 
-    cout<< "Order in which processes gets executed \n";
-    for (int  i = 0 ; i <  n; i++)
-        cout << proc[i].pid <<" " ;
- 
-    findavgTime(proc, n);
-}
- 
-// Driver code
 int main()
 {
-    Process proc[] = {{1, 10, 2}, {2, 5, 0}, {3, 8, 1}};
-    int n = sizeof proc / sizeof proc[0];
-    priorityScheduling(proc, n);
+    int bt[20],p[20],wt[20],tat[20],pr[20],i,j,n,total=0,pos,temp,avg_wt,avg_tat;
+    cout<<"Enter Total Number of Process:";
+    cin>>n;
+ 
+    cout<<"\nEnter Burst Time and Priority\n";
+    for(i=0;i<n;i++)
+    {
+        cout<<"\nP["<<i+1<<"]\n";
+        cout<<"Burst Time:";
+        cin>>bt[i];
+        cout<<"Priority:";
+        cin>>pr[i];
+        p[i]=i+1;           //contains process number
+    }
+ 
+    //sorting burst time, priority and process number in ascending order using selection sort
+    for(i=0;i<n;i++)
+    {
+        pos=i;
+        for(j=i+1;j<n;j++)
+        {
+            if(pr[j]<pr[pos])
+                pos=j;
+        }
+ 
+        temp=pr[i];
+        pr[i]=pr[pos];
+        pr[pos]=temp;
+ 
+        temp=bt[i];
+        bt[i]=bt[pos];
+        bt[pos]=temp;
+ 
+        temp=p[i];
+        p[i]=p[pos];
+        p[pos]=temp;
+    }
+ 
+    wt[0]=0;            //waiting time for first process is zero
+ 
+    //calculate waiting time
+    for(i=1;i<n;i++)
+    {
+        wt[i]=0;
+        for(j=0;j<i;j++)
+            wt[i]+=bt[j];
+ 
+        total+=wt[i];
+    }
+ 
+    avg_wt=total/n;      //average waiting time
+    total=0;
+ 
+    cout<<"\nProcess\t    Burst Time    \tWaiting Time\tTurnaround Time";
+    for(i=0;i<n;i++)
+    {
+        tat[i]=bt[i]+wt[i];     //calculate turnaround time
+        total+=tat[i];
+        cout<<"\nP["<<p[i]<<"]\t\t  "<<bt[i]<<"\t\t    "<<wt[i]<<"\t\t\t"<<tat[i];
+    }
+ 
+    avg_tat=total/n;     //average turnaround time
+    cout<<"\n\nAverage Waiting Time="<<avg_wt;
+    cout<<"\nAverage Turnaround Time="<<avg_tat;
+ 
     return 0;
 }
