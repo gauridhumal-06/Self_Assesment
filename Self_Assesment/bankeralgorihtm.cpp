@@ -1,3 +1,4 @@
+// Allocated | Max Need | Available| Remaning Need
 #include <iostream>
 using namespace std;
 int main()
