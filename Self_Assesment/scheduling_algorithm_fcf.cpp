@@ -1,3 +1,4 @@
+// Criteria - Arrival time , non premtive
 #include<iostream>
 using namespace std;
  
